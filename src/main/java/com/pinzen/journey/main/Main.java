@@ -1,7 +1,16 @@
-package com.pinzen.journey;
+package com.pinzen.journey.main;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+
+/**
+ * ----- ----- TODO LIST ----- -----
+ * 
+ * - send unsignedBytes for position/speed - create function to easily put int,
+ * float, long, string and UUID in NetworkMessage - remove users on
+ * disconnection
+ * 
+ **/
 
 public class Main {
 
@@ -9,7 +18,7 @@ public class Main {
         System.out.println("Starting Application ...");
 
         Application app = new Application();
-        boolean running = app.startServers();
+        boolean running = app.start();
 
         BufferedReader sysin = new BufferedReader(new InputStreamReader(System.in));
         String in = "";
@@ -19,7 +28,7 @@ public class Main {
             } catch (Exception e) {
                 in = "exit";
             }
-            if (in.equals("exit")) {
+            if (in.equals("exit") || in.equals("e")) {
                 app.stopServers();
                 running = false;
                 break;

@@ -1,4 +1,4 @@
-package com.pinzen.journey;
+package com.pinzen.journey.network;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,17 +8,16 @@ import java.nio.file.Files;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-public class RootHandler implements HttpHandler {
+public class HTMLServer implements HttpHandler {
 
-    private static File error404 = new File("www/error404.html");
+    private static File error404 = new File("Journey/www/error404.html");
 
     public void handle(HttpExchange he) throws IOException {
         String requestString = he.getRequestURI().getPath();
-        System.out.println("Asked file <" + requestString + ">");
         if (requestString.equals("") || requestString.equals("/")) {
             requestString = "index.html";
         }
-        File file = new File("www/" + requestString);
+        File file = new File("Journey/www/" + requestString);
         int code = 200;
         if (!file.exists() || file.isDirectory()) {
             file = error404;
