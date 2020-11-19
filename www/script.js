@@ -11,7 +11,7 @@ socket.onmessage = async msg => {
     const buffer = await msg.data.arrayBuffer();
     const bytes = Array.from(new Uint8Array(buffer));
 
-    const msgId = bytes.splice(0, 1)[0];
+    const msgId = bytes.shift();
     if(msgId === 2){
         const info = messageUpdateEntityPosition(bytes);
         if(!(info.uuid in users)) {
@@ -23,7 +23,6 @@ socket.onmessage = async msg => {
         user.y = info.y;
     }
     else if(msgId === 3){
-        console.log("YAAAAA")
         const info = messageUserDisconnection(bytes);
         console.log(info)
         delete users[info.uuid];
