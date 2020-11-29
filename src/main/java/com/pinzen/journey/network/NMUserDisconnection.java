@@ -12,7 +12,7 @@ public class NMUserDisconnection extends NetworkMessage {
     private UUID userUuid;
 
     public NMUserDisconnection() {
-        super(ID);
+        super(ID, 16);
     }
 
     public void prepare(UUID userUuid) {
@@ -20,14 +20,8 @@ public class NMUserDisconnection extends NetworkMessage {
     }
 
     @Override
-    public byte[] encode() {
-        ByteBuffer buffer = ByteBuffer.allocate(17);
-        buffer.put((byte) ID);
-        buffer.putLong(userUuid.getMostSignificantBits());
-        buffer.putLong(userUuid.getLeastSignificantBits());
-        buffer.flip();
-
-        return buffer.array();
+    protected void prepareEncode() {
+        this.writeUuid(userUuid);
     }
 
     @Override

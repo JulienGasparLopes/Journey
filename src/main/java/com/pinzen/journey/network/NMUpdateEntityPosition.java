@@ -13,29 +13,22 @@ public class NMUpdateEntityPosition extends NetworkMessage {
     private Entity entity;
 
     public NMUpdateEntityPosition() {
-        super(ID);
+        super(ID, 32);
     }
 
     public void prepare(Entity entity) {
         this.entity = entity;
     }
 
-    @Override
-    public byte[] encode() {
+    public void prepareEncode() {
         int[] position = entity.getPosition();
         int[] speed = entity.getSpeed();
 
-        ByteBuffer buffer = ByteBuffer.allocate(21);
-        buffer.put((byte) ID);
-        buffer.putLong(entity.getUuid().getMostSignificantBits());
-        buffer.putLong(entity.getUuid().getLeastSignificantBits());
-        buffer.put((byte) position[0]);
-        buffer.put((byte) position[1]);
-        buffer.put((byte) speed[0]);
-        buffer.put((byte) speed[1]);
-        buffer.flip();
-
-        return buffer.array();
+        this.writeUuid(entity.getUuid());
+        this.writeInt(position[0]);
+        this.writeInt(position[1]);
+        this.writeInt(speed[0]);
+        this.writeInt(speed[1]);
     }
 
     @Override

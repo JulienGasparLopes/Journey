@@ -15,8 +15,8 @@ public class NMMovement extends NetworkMessage {
     }
 
     @Override
-    public byte[] encode() {
-        return null;
+    protected void prepareEncode() {
+        // TODO Auto-generated method stub
     }
 
     @Override

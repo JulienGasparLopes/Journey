@@ -11,7 +11,7 @@ socket.onmessage = async msg => {
     const buffer = await msg.data.arrayBuffer();
     const bytes = Array.from(new Uint8Array(buffer));
 
-    const msgId = bytes.shift();
+    const msgId = readInt(bytes);
     if(msgId === 2){
         const info = messageUpdateEntityPosition(bytes);
         if(!(info.uuid in users)) {

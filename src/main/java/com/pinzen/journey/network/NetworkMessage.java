@@ -16,12 +16,55 @@ public abstract class NetworkMessage {
     }
 
     private int id;
+    private ByteBuffer buffer;
+    private byte[] byteArray;
 
-    public NetworkMessage(int id) {
+    public NetworkMessage(int id, int messageByteNumber) {
         this.id = id;
+        // Add 4 in order to send message ID
+        this.buffer = ByteBuffer.allocate(messageByteNumber == 0 ? 0 : (messageByteNumber + 4));
     }
 
-    public abstract byte[] encode();
+    public NetworkMessage(int id) {
+        this(id, 0);
+    }
+
+    /**
+     * Write an integer on buffer (4 bytes)
+     * 
+     * @param i : integer to write
+     */
+    protected void writeInt(int i) {
+        this.buffer.putInt(i);
+    }
+
+    protected void writeByte(byte b) {
+        this.buffer.put(b);
+    }
+
+    /**
+     * Write an Uuid on buffer (16 bytes)
+     * 
+     * @param uuid : UUID to write
+     */
+    protected void writeUuid(UUID uuid) {
+        buffer.putLong(uuid.getMostSignificantBits());
+        buffer.putLong(uuid.getLeastSignificantBits());
+    }
+
+    protected abstract void prepareEncode();
+
+    public byte[] encode() {
+        // Encode message only one time
+        if (this.byteArray == null) {
+            this.writeInt(2);
+            this.prepareEncode();
+            this.buffer.flip();
+            this.byteArray = this.buffer.array();
+        }
+
+        return this.byteArray;
+    }
 
     public abstract void decode(UUID senderUid, ByteBuffer msg, GameManager gameManager);
 
