@@ -29,6 +29,15 @@ public abstract class NetworkMessage {
         this(id, 0);
     }
 
+    public NetworkMessage(int id, ByteBuffer buffer) {
+        this.id = id;
+        this.buffer = buffer;
+    }
+
+    protected void writeByte(byte b) {
+        this.buffer.put(b);
+    }
+
     /**
      * Write an integer on buffer (4 bytes)
      * 
@@ -36,10 +45,6 @@ public abstract class NetworkMessage {
      */
     protected void writeInt(int i) {
         this.buffer.putInt(i);
-    }
-
-    protected void writeByte(byte b) {
-        this.buffer.put(b);
     }
 
     /**
@@ -50,6 +55,14 @@ public abstract class NetworkMessage {
     protected void writeUuid(UUID uuid) {
         buffer.putLong(uuid.getMostSignificantBits());
         buffer.putLong(uuid.getLeastSignificantBits());
+    }
+
+    protected byte readByte() {
+        return this.buffer.get();
+    }
+
+    protected int readInt() {
+        return this.buffer.getInt();
     }
 
     protected abstract void prepareEncode();
@@ -66,7 +79,7 @@ public abstract class NetworkMessage {
         return this.byteArray;
     }
 
-    public abstract void decode(UUID senderUid, ByteBuffer msg, GameManager gameManager);
+    public abstract void decode(UUID senderUid, GameManager gameManager);
 
     public int getId() {
         return this.id;

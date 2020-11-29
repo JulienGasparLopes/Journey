@@ -14,16 +14,20 @@ public class NMMovement extends NetworkMessage {
         super(ID);
     }
 
+    public NMMovement(ByteBuffer buffer) {
+        super(ID, buffer);
+    }
+
     @Override
     protected void prepareEncode() {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void decode(UUID senderUuid, ByteBuffer msg, GameManager gameManager) {
+    public void decode(UUID senderUuid, GameManager gameManager) {
         User sender = gameManager.getUser(senderUuid);
-        int keyCode = msg.get();
-        int keyState = msg.get();
+        int keyCode = this.readInt();
+        int keyState = this.readInt();
 
         sender.updateKey(keyCode, keyState == 1);
     }

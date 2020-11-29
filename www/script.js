@@ -34,13 +34,16 @@ socket.onmessage = async msg => {
 
 // ----- ----- Keyboard Listeners ----- -----
 document.addEventListener('keydown', (e) => {
-    if (!e.repeat)
-    socket.send(new Uint8Array([1, KEYBOARD_MAPPING[e.key], 1]));
+    if (!e.repeat && e.key in KEYBOARD_MAPPING) {
+        let message = messageMovementWrite(KEYBOARD_MAPPING[e.key], 1);
+        socket.send(new Uint8Array(message));
+    }
 });
 
 document.addEventListener('keyup', (e) => {
-    if(e.key in KEYBOARD_MAPPING)
-        socket.send(new Uint8Array([1, KEYBOARD_MAPPING[e.key], 0]));
+    if(e.key in KEYBOARD_MAPPING) {
+        socket.send(new Uint8Array(messageMovementWrite(KEYBOARD_MAPPING[e.key], 0)));
+    }
 });
 
 // ----- ----- Render ----- -----

@@ -1,6 +1,5 @@
 package com.pinzen.journey.network;
 
-import java.nio.ByteBuffer;
 import java.util.UUID;
 
 import com.pinzen.journey.logic.GameManager;
@@ -25,7 +24,7 @@ public class NMUserDisconnection extends NetworkMessage {
     }
 
     @Override
-    public void decode(UUID senderUid, ByteBuffer msg, GameManager gameManager) {
+    public void decode(UUID senderUid, GameManager gameManager) {
 
     }
 }

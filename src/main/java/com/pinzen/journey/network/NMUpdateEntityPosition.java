@@ -1,6 +1,5 @@
 package com.pinzen.journey.network;
 
-import java.nio.ByteBuffer;
 import java.util.UUID;
 
 import com.pinzen.journey.entities.Entity;
@@ -32,8 +31,7 @@ public class NMUpdateEntityPosition extends NetworkMessage {
     }
 
     @Override
-    public void decode(UUID senderUid, ByteBuffer msg, GameManager gameManager) {
-
+    public void decode(UUID senderUid, GameManager gameManager) {
     }
 
 }

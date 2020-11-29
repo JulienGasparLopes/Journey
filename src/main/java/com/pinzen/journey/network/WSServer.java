@@ -42,13 +42,13 @@ public class WSServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, ByteBuffer message) {
-        int msgId = message.get();
+        int msgId = message.getInt();
         Class<? extends NetworkMessage> msgClass = NETWORK_MESSAGES.get(msgId);
         try {
-            NetworkMessage networkMsg = msgClass.getConstructor().newInstance();
-            networkMsg.decode((UUID) conn.getAttachment(), message, this.gameManager);
+            NetworkMessage networkMsg = msgClass.getConstructor(ByteBuffer.class).newInstance(message);
+            networkMsg.decode((UUID) conn.getAttachment(), this.gameManager);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
