@@ -62,9 +62,9 @@ public class WSServer extends WebSocketServer {
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         UUID uuid = (UUID) conn.getAttachment();
-        gameManager.removeUser(uuid);
+        User userRemoved = gameManager.removeUser(uuid);
         NMUserDisconnection msg = new NMUserDisconnection();
-        msg.prepare(uuid);
+        msg.prepare(userRemoved.player.getUuid());
         this.broadcast(msg);
     }
 

@@ -3,33 +3,36 @@ package com.pinzen.journey.network;
 import java.nio.ByteBuffer;
 import java.util.UUID;
 
+import com.pinzen.journey.entities.Entity;
 import com.pinzen.journey.logic.GameManager;
-import com.pinzen.journey.logic.User;
 
 public class NMUpdateEntityPosition extends NetworkMessage {
 
     public static final int ID = 2;
 
-    private User user;
+    private Entity entity;
 
     public NMUpdateEntityPosition() {
         super(ID);
     }
 
-    public void prepare(User user) {
-        this.user = user;
+    public void prepare(Entity entity) {
+        this.entity = entity;
     }
 
     @Override
     public byte[] encode() {
+        int[] position = entity.getPosition();
+        int[] speed = entity.getSpeed();
+
         ByteBuffer buffer = ByteBuffer.allocate(21);
         buffer.put((byte) ID);
-        buffer.putLong(user.getUuid().getMostSignificantBits());
-        buffer.putLong(user.getUuid().getLeastSignificantBits());
-        buffer.put((byte) user.x);
-        buffer.put((byte) user.y);
-        buffer.put((byte) user.vx);
-        buffer.put((byte) user.vy);
+        buffer.putLong(entity.getUuid().getMostSignificantBits());
+        buffer.putLong(entity.getUuid().getLeastSignificantBits());
+        buffer.put((byte) position[0]);
+        buffer.put((byte) position[1]);
+        buffer.put((byte) speed[0]);
+        buffer.put((byte) speed[1]);
         buffer.flip();
 
         return buffer.array();

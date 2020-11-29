@@ -6,9 +6,12 @@ import java.io.InputStreamReader;
 /**
  * ----- ----- TODO LIST ----- -----
  * 
- * - send unsignedBytes for position/speed - create function to easily put int,
- * float, long, string and UUID in NetworkMessage - remove users on
- * disconnection
+ * - send int for position/speed
+ * 
+ * - create function to easily put int, float, long, string and UUID in
+ * NetworkMessage
+ * 
+ * - remove users on disconnection
  * 
  **/
 

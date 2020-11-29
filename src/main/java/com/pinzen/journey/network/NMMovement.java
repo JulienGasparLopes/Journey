@@ -25,16 +25,7 @@ public class NMMovement extends NetworkMessage {
         int keyCode = msg.get();
         int keyState = msg.get();
 
-        if (keyCode == 1) {
-            sender.vy = keyState;
-        } else if (keyCode == 3) {
-            sender.vy = -keyState;
-        } else if (keyCode == 2) {
-            sender.vx = keyState;
-        } else if (keyCode == 4) {
-            sender.vx = -keyState;
-        }
-
+        sender.updateKey(keyCode, keyState == 1);
     }
 
 }

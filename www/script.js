@@ -15,7 +15,11 @@ socket.onmessage = async msg => {
     if(msgId === 2){
         const info = messageUpdateEntityPosition(bytes);
         if(!(info.uuid in users)) {
-            const color = "#" + [0, 0, 0].map(() => Math.round(Math.random() * 255).toString(16)).join("");
+            const color = "#" + [0, 0, 0].map(() => {
+                let val = Math.round(Math.random() * 200).toString(16);
+                val = val.length < 2 ? "0" + val : val;
+                return val;
+            }).join("");
             users[info.uuid] = { uuid: info.uuid, color: color }
         }
         let user = users[info.uuid];
@@ -24,7 +28,6 @@ socket.onmessage = async msg => {
     }
     else if(msgId === 3){
         const info = messageUserDisconnection(bytes);
-        console.log(info)
         delete users[info.uuid];
     }
 }
@@ -49,6 +52,5 @@ const render = () => {
         ctx.fillRect(user.x - 10, 300 - (user.y + 10), 20, 20);
     });
     setTimeout(render, 1000/50);
-    console.log(Object.values(users).length)
 }
 render();
