@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.pinzen.journey.entities.Entity;
+import com.pinzen.journey.entities.Player;
 import com.pinzen.journey.network.NMUpdateEntityPosition;
 import com.pinzen.journey.network.NetworkMessage;
 

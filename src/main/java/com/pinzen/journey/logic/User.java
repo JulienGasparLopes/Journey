@@ -2,6 +2,7 @@ package com.pinzen.journey.logic;
 
 import java.util.UUID;
 
+import com.pinzen.journey.entities.Player;
 import com.pinzen.journey.network.NetworkMessage;
 
 import org.java_websocket.WebSocket;

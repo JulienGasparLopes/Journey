@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import com.pinzen.journey.network.NMUpdateEntityPosition;
-
 import org.java_websocket.WebSocket;
 
 public class GameManager extends Thread {

@@ -1,6 +1,6 @@
-package com.pinzen.journey.logic;
+package com.pinzen.journey.entities;
 
-import com.pinzen.journey.entities.Entity;
+import com.pinzen.journey.logic.User;
 import com.pinzen.journey.network.NetworkMessage;
 
 public class Player extends Entity {
