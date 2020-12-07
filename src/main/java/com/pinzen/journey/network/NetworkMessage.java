@@ -19,14 +19,9 @@ public abstract class NetworkMessage {
     private ByteBuffer buffer;
     private byte[] byteArray;
 
-    public NetworkMessage(int id, int messageByteNumber) {
-        this.id = id;
-        // Add 4 in order to send message ID
-        this.buffer = ByteBuffer.allocate(messageByteNumber == 0 ? 0 : (messageByteNumber + 4));
-    }
-
     public NetworkMessage(int id) {
-        this(id, 0);
+        this.id = id;
+        this.buffer = ByteBuffer.allocate(65536);
     }
 
     public NetworkMessage(int id, ByteBuffer buffer) {
@@ -70,10 +65,11 @@ public abstract class NetworkMessage {
     public byte[] encode() {
         // Encode message only one time
         if (this.byteArray == null) {
-            this.writeInt(2);
+            this.writeInt(this.id);
             this.prepareEncode();
             this.buffer.flip();
-            this.byteArray = this.buffer.array();
+            this.byteArray = new byte[buffer.limit()];
+            this.buffer.get(this.byteArray);
         }
 
         return this.byteArray;

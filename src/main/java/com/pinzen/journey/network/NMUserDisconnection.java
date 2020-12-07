@@ -11,7 +11,7 @@ public class NMUserDisconnection extends NetworkMessage {
     private UUID userUuid;
 
     public NMUserDisconnection() {
-        super(ID, 16);
+        super(ID);
     }
 
     public void prepare(UUID userUuid) {

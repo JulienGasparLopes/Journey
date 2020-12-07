@@ -1,12 +1,33 @@
-const messageUpdateEntityPosition = (bytes) => {
-    const info = {};
-    info.uuid = readUuid(bytes)
-    info.x = readInt(bytes);
-    info.y = readInt(bytes);
-    info.vx = readInt(bytes);
-    info.vy = readInt(bytes);
+const messageUpdateEntities = (bytes) => {
+    const entitiesInfo = [];
+    const entitiesNumber = readInt(bytes);
 
-    return info;
+    for(let i = 0; i<entitiesNumber; i++){
+        let info = {}
+        info.uuid = readUuid(bytes)
+        info.x = readInt(bytes);
+        info.y = readInt(bytes);
+        info.vx = readInt(bytes);
+        info.vy = readInt(bytes);
+        info.life = readInt(bytes);
+        info.maximumLife = readInt(bytes);
+        entitiesInfo.push(info);
+    }
+
+    return entitiesInfo;
+}
+
+const messageRemoveEntities = bytes => {
+    const entitiesInfo = [];
+    const entitiesNumber = readInt(bytes);
+
+    for(let i = 0; i<entitiesNumber; i++){
+        let info = {}
+        info.uuid = readUuid(bytes)
+        entitiesInfo.push(info);
+    }
+
+    return entitiesInfo;
 }
 
 const messageUserDisconnection = bytes => {
