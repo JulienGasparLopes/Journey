@@ -2,14 +2,14 @@ package com.pinzen.journey.entities;
 
 import java.util.List;
 
-public class Totem extends Entity {
+public class TotemDamage extends Invocation {
 
     private int damage, radius;
     private long attackTime, attackTimer;
 
-    public Totem(int damage, int radius, long attackTime) {
-        super();
-        this.damage = damage;
+    public TotemDamage(Entity owner, int damage, int radius, long attackTime) {
+        super(owner);
+        this.damage = damage > 0 ? damage : 0;
         this.attackTime = attackTime;
         this.radius = radius;
 
@@ -22,12 +22,13 @@ public class Totem extends Entity {
 
         if (this.attackTimer >= this.attackTime) {
             this.attackTimer = 0;
+
             for (Entity e : entities) {
-                if (e != this) {
-                    if (Math.abs(this.x - e.x) < radius && Math.abs(this.y - e.y) < radius) {
-                        e.damage(damage);
-                    }
-                }
+                if (this.isSameTeam(e))
+                    continue;
+
+                if (Math.abs(this.x - e.x) < radius && Math.abs(this.y - e.y) < radius)
+                    e.damage(damage);
             }
         }
     }

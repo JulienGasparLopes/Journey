@@ -26,15 +26,29 @@ public abstract class Entity {
     /**
      * Apply damage to Entity and return a boolean telling if the target is dead
      * 
-     * @param dmg
-     * @return
+     * @param damage : amount of damages to deal (> 0)
+     * @return true if the entity is dead
      */
-    public boolean damage(int dmg) {
-        this.life -= dmg;
-        if (this.life > this.maximumLife) {
-            this.life = this.maximumLife;
-        }
+    public boolean damage(int damage) {
+        if (damage > 0)
+            this.life -= damage;
         return this.isDead();
+    }
+
+    /**
+     * Apply heal to Entity and return a boolean telling if the target is full life
+     * 
+     * @param healAmount : amount of life to heal (> 0)
+     * @return true if the entity is full life
+     */
+    public boolean heal(int healAmount) {
+        if (healAmount > 0)
+            this.life += healAmount;
+
+        if (this.life > this.maximumLife)
+            this.life = this.maximumLife;
+
+        return this.life == this.maximumLife;
     }
 
     public void setSpeed(int vx, int vy) {
