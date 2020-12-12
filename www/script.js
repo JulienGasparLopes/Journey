@@ -1,6 +1,8 @@
 const canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
+let mouseX = 0, mouseY = 0;
+
 const users = {};
 
 socket = new WebSocket("ws://localhost:8004");
@@ -43,19 +45,33 @@ socket.onmessage = async msg => {
         }
     }
 }
+const sendMessage = msg => {
+    socket.send(new Uint8Array(msg));
+}
 
 // ----- ----- Keyboard Listeners ----- -----
 document.addEventListener('keydown', (e) => {
     if (!e.repeat && e.key in KEYBOARD_MAPPING) {
-        let message = messageMovementWrite(KEYBOARD_MAPPING[e.key], 1);
-        socket.send(new Uint8Array(message));
+        const message = messageMovementWrite(KEYBOARD_MAPPING[e.key], 1);
+        sendMessage(message);
     }
 });
 
 document.addEventListener('keyup', (e) => {
     if(e.key in KEYBOARD_MAPPING) {
-        socket.send(new Uint8Array(messageMovementWrite(KEYBOARD_MAPPING[e.key], 0)));
+        sendMessage(messageMovementWrite(KEYBOARD_MAPPING[e.key], 0));
     }
+    else if(["a", "A"].includes(e.key)) {
+        sendMessage(messageUseAbility(1, mouseX, mouseY))
+    }
+    else if(["e", "E"].includes(e.key)) {
+        sendMessage(messageUseAbility(2, mouseX, mouseY))
+    }
+});
+// ----- ----- Mouse Listeners ----- -----
+canvas.addEventListener("mousemove", e => {
+    mouseX = e.clientX;
+    mouseY = 300 - e.clientY;
 });
 
 // ----- ----- Render ----- -----
@@ -65,7 +81,7 @@ const render = () => {
     Object.values(users).forEach(user => {
         ctx.fillStyle = user.color;
         let x = user.x - 10;
-        let y = 300 - (user.y + 10);
+        let y = (300 - user.y) - 10;
         ctx.fillRect(x, y, 20, 20);
         ctx.fillText(user.life + "/" + user.maximumLife, x, y - 5)
     });

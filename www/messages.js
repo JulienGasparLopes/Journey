@@ -1,4 +1,6 @@
-const messageUpdateEntities = (bytes) => {
+/** ----- ----- Decode Messages ----- ----- **/
+
+const messageUpdateEntities = bytes => {
     const entitiesInfo = [];
     const entitiesNumber = readInt(bytes);
 
@@ -36,15 +38,27 @@ const messageUserDisconnection = bytes => {
     return info;
 }
 
+/** ----- ----- Encode Messages ----- ----- **/
+
 const messageMovementWrite = (keyCode, state) => {
-    let bytes = [];
-    writeInt(bytes, 1); //message id
+    const bytes = [];
+    writeInt(bytes, 1); // Message Id
     writeInt(bytes, keyCode);
     writeInt(bytes, state)
     return bytes;
 }
 
+const messageUseAbility = (abilityId, mouseX, mouseY) => {
+    const bytes = [];
+    writeInt(bytes, 8); // Message Id
+    writeInt(bytes, abilityId);
+    writeInt(bytes, mouseX);
+    writeInt(bytes, mouseY);
+    return bytes;
+}
+
 /** ----- ----- Helpers ----- ----- **/
+
 const readInt = (bytes) => {
     let d = bytes.shift() << 24;
     let c = bytes.shift() << 16;

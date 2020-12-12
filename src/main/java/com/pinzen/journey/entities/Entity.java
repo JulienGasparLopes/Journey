@@ -37,6 +37,16 @@ public abstract class Entity {
         return this.isDead();
     }
 
+    public void setSpeed(int vx, int vy) {
+        this.vx = vx;
+        this.vy = vy;
+    }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public boolean isDead() {
         return this.life <= 0;
     }
@@ -47,11 +57,6 @@ public abstract class Entity {
 
     public int getMaximumLife() {
         return this.maximumLife;
-    }
-
-    public void setSpeed(int vx, int vy) {
-        this.vx = vx;
-        this.vy = vy;
     }
 
     public int[] getPosition() {

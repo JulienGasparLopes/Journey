@@ -72,6 +72,10 @@ public class GameManager extends Thread {
         return users.get(userUuid);
     }
 
+    public GameMap getMap(UUID mapUuid) {
+        return maps.get(mapUuid);
+    }
+
     public Collection<User> getUsers() {
         return this.users.values();
     }

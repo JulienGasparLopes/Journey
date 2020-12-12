@@ -13,6 +13,7 @@ public abstract class NetworkMessage {
     static {
         NETWORK_MESSAGES = new HashMap<Integer, Class<? extends NetworkMessage>>();
         NETWORK_MESSAGES.put(NMMovement.ID, NMMovement.class);
+        NETWORK_MESSAGES.put(NMUseAbility.ID, NMUseAbility.class);
     }
 
     private int id;
